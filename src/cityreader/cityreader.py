@@ -71,10 +71,14 @@ for c in cities:
 def inputcoords():
   if 'latlon1' not in globals():
     global latlon1
-    latlon1 = input("enter first (lat,lon) ->")
+    latlon1 = input("enter first (lat,lon) -> ")
   if 'latlon2' not in globals():
     global latlon2
-    latlon2 = input("enter second (lat,lon) ->")
+    latlon2 = input("enter second (lat,lon) -> ")
+
+def cityreader_stretch(greaterlat, lesserlat, greaterlon, lesserlon, cities=[]):
+  within = [(c.name, c.lat, c.lon) for c in cities if c.lat >= lesserlat and c.lat <= greaterlat and c.lon >= lesserlon and c.lon <= greaterlon]
+  return within
 
 while True:
   inputcoords()
@@ -82,14 +86,20 @@ while True:
   lon1f = float(latlon1.split(',')[1])
   lat2f = float(latlon2.split(',')[0])
   lon2f = float(latlon2.split(',')[1])
-  cityreader_stretch(lat1f, lon1f, lat2f, lon2f)
+  if lat1f >= lat2f:
+    greaterlat = lat1f
+    lesserlat = lat2f
+  else:
+    greaterlat = lat2f
+    lesserlat = lat1f
+  if lon1f >= lon2f:
+    greaterlon = lon1f
+    lesserlon = lon2f
+  else:
+    greaterlon = lon2f
+    lesserlon = lon1f
+  cityreader_stretch(greaterlat, lesserlat, greaterlon, lesserlon, cities)
+  break
 
 
-def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
-  within = []
 
-  # TODO Ensure that the lat and lon valuse are all floats
-  # Go through each city and check to see if it falls within 
-  # the specified coordinates.
-
-  return within
